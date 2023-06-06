@@ -35,7 +35,7 @@ namespace Snowflake.Data.Core
         /// <summary>
         ///     This map is used to cache column name to column index. Index is 0-based.
         /// </summary>
-        private Dictionary<string, int> columnNameToIndexCache = new Dictionary<string, int>();
+        private Dictionary<string, int> columnNameToIndexCache = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
         internal SFResultSetMetaData(QueryExecResponseData queryExecResponseData)
         {
@@ -95,7 +95,7 @@ namespace Snowflake.Data.Core
                 int indexCounter = 0;
                 foreach (ExecResponseRowType rowType in rowTypes)
                 {
-                    if (String.Compare(rowType.name, targetColumnName, false ) == 0 )
+                    if (String.Compare(rowType.name, targetColumnName, StringComparison.OrdinalIgnoreCase ) == 0 )
                     {
                         logger.Info($"Found colun name {targetColumnName} under index {indexCounter}");
                         columnNameToIndexCache[targetColumnName] = indexCounter;
